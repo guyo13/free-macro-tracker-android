@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Free Macro Tracker</string>
+    <string name="alert_ok">OK</string>
+    <string name="alert_danger">Error</string>
+    <string name="alert_warning">Warning</string>
+    <string name="alert_success">Success</string>
+</resources>
