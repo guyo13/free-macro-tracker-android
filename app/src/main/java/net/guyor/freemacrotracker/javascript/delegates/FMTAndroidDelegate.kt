@@ -4,4 +4,5 @@ import net.guyor.freemacrotracker.model.FMTAlertLevel
 
 interface FMTAndroidDelegate {
     fun FMTShowAlert(msg: String, level: FMTAlertLevel)
+    fun FMTShowAlertBar(msg: String)
 }

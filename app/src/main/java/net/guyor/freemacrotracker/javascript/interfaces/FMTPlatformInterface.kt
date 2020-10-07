@@ -21,4 +21,11 @@ class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate)
             delegate.FMTShowAlert(msg, alertLevel);
         }
     }
+    @JavascriptInterface
+    public fun FMTShowAlertBar(msg: String?) {
+        Log.v(TAG, "FMTShowAlertBar msg $msg")
+        if (msg != null) {
+            delegate.FMTShowAlertBar(msg)
+        }
+    }
 }

@@ -17,14 +17,27 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
     private val _fmtShowAlertEvent = MutableLiveData<FMTAlertEvent?>()
     val fmtShowAlertEvent: LiveData<FMTAlertEvent?> get() = _fmtShowAlertEvent
 
+    private val _fmtShowSnackBarEvent = MutableLiveData<String?>()
+    val fmtShowSnackBarEvent: LiveData<String?> get() = _fmtShowSnackBarEvent
+
     override fun FMTShowAlert(msg: String, level: FMTAlertLevel) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
             _fmtShowAlertEvent.value = FMTAlertEvent(msg, level)
         })
     }
 
+    override fun FMTShowAlertBar(msg: String) {
+        viewModelScope.launch(context = Dispatchers.Main, block = {
+            _fmtShowSnackBarEvent.value = msg;
+        })
+    }
+
     public fun onFmtShowAlertEventEnded() {
         _fmtShowAlertEvent.value = null
+    }
+
+    public fun onFmtShowSnackbarEventEnded() {
+        _fmtShowSnackBarEvent.value = null
     }
 }
 

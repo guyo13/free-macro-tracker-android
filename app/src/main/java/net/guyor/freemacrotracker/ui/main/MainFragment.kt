@@ -11,8 +11,11 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
+import com.google.android.material.snackbar.Snackbar
 import net.guyor.freemacrotracker.R
 import net.guyor.freemacrotracker.databinding.MainFragmentBinding
 import net.guyor.freemacrotracker.model.FMTAlertLevel
@@ -75,6 +78,13 @@ class MainFragment : Fragment() {
                 viewModel.onFmtShowAlertEventEnded()
             }
         }
+        viewModel.fmtShowSnackBarEvent.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                val snackbar = Snackbar.make(binding.webview, it, LENGTH_SHORT)
+                snackbar.show()
+                viewModel.onFmtShowSnackbarEventEnded()
+            }
+        })
         return binding.root
     }
 
