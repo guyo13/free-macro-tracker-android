@@ -24,6 +24,12 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
     private val _fmtExportDataEvent = MutableLiveData<FMTFileData?>()
     val fmtExportDataEvent: LiveData<FMTFileData?> get() = _fmtExportDataEvent
 
+    private val _fmtImportDataEvent = MutableLiveData<Boolean?>()
+    val fmtImportDataEvent: LiveData<Boolean?> get() = _fmtImportDataEvent
+
+    private val _fmtShowPromptEvent = MutableLiveData<FMTAlertEvent?>()
+    val fmtShowPromptEvent: LiveData<FMTAlertEvent?> get() = _fmtShowPromptEvent
+
     override fun FMTShowAlert(msg: String, level: FMTAlertLevel) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
             _fmtShowAlertEvent.value = FMTAlertEvent(msg, level)
@@ -32,26 +38,46 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
 
     override fun FMTShowAlertBar(msg: String) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
-            _fmtShowSnackBarEvent.value = msg;
+            _fmtShowSnackBarEvent.value = msg
         })
     }
 
     override fun FMTExportData(data: FMTFileData) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
-            _fmtExportDataEvent.value = data;
+            _fmtExportDataEvent.value = data
         })
     }
 
-    public fun onFmtShowAlertEventEnded() {
+    override fun FMTImportData() {
+        viewModelScope.launch(context = Dispatchers.Main, block = {
+            _fmtImportDataEvent.value = true
+        })
+    }
+
+    override fun FMTShowPrompt(msg: String, level: FMTAlertLevel) {
+        viewModelScope.launch(context = Dispatchers.Main, block = {
+            _fmtShowPromptEvent.value = FMTAlertEvent(msg, level)
+        })
+    }
+
+    fun onFmtShowAlertEventEnded() {
         _fmtShowAlertEvent.value = null
     }
 
-    public fun onFmtShowSnackbarEventEnded() {
+    fun onFmtShowSnackbarEventEnded() {
         _fmtShowSnackBarEvent.value = null
     }
 
-    public fun onFmtExportEventEnded() {
+    fun onFmtExportEventEnded() {
         _fmtExportDataEvent.value = null
+    }
+
+    fun onFmtImportEventEnded() {
+        _fmtImportDataEvent.value = null
+    }
+
+    fun onFmtShowPromptEventEnded() {
+        _fmtShowPromptEvent.value = null
     }
 }
 

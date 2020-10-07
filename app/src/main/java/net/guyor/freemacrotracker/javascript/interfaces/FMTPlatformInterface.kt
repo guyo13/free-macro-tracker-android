@@ -9,7 +9,7 @@ import net.guyor.freemacrotracker.model.FMTFileData
 private const val TAG = "FMTPlatformInterface"
 class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate) {
     @JavascriptInterface
-    public fun FMTShowAlert(msg: String?, level: String?) {
+    fun FMTShowAlert(msg: String?, level: String?) {
         Log.v(TAG, "FMTShowAlert msg $msg, level $level")
         if (msg != null && level != null) {
             val alertLevel: FMTAlertLevel = try {
@@ -23,19 +23,36 @@ class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate)
         }
     }
     @JavascriptInterface
-    public fun FMTShowAlertBar(msg: String?) {
+    fun FMTShowAlertBar(msg: String?) {
         Log.v(TAG, "FMTShowAlertBar msg $msg")
         msg?.let {
             delegate.FMTShowAlertBar(msg)
         }
     }
     @JavascriptInterface
-    public fun FMTExportData(data: String?, filename: String?) {
+    fun FMTExportData(data: String?, filename: String?) {
         Log.v(TAG, "FMTExportData called")
         data?.let {
-            filename?.let {
-                delegate.FMTExportData(FMTFileData(data, filename))
+            delegate.FMTExportData(FMTFileData(data, filename ?: ""))
+        }
+    }
+    @JavascriptInterface
+    fun FMTImportData() {
+        Log.v(TAG, "FMTImportData called")
+        delegate.FMTImportData()
+    }
+    @JavascriptInterface
+    fun FMTShowPrompt(msg: String?, level: String?) {
+        Log.v(TAG, "FMTShowPrompt msg $msg, level $level")
+        if (msg != null && level != null) {
+            val alertLevel: FMTAlertLevel = try {
+                FMTAlertLevel.valueOf(level)
+            } catch (t: Throwable) {
+                Log.e(TAG, t.message.toString())
+                Log.w(TAG, "Invalid alert level specified (${level})")
+                FMTAlertLevel.unspecified
             }
+            delegate.FMTShowPrompt(msg, alertLevel);
         }
     }
 }

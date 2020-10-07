@@ -5,8 +5,16 @@
     <string name="alert_danger">Error</string>
     <string name="alert_warning">Warning</string>
     <string name="alert_success">Success</string>
+    <string name="alert_confirm">Are you sure?</string>
     <string name="export_write_perm_title">Permissions Required</string>
     <string name="export_write_perm_msg">Please enable write permissions in order to export your data</string>
     <string name="export_storage_fail_msg">Error exporting data. Device storage unavailable!</string>
     <string name="export_perm_fail_msg">Error exporting data. Storage permissions denied!</string>
+    <string name="export_success_msg">Your data was successfully exported!</string>
+    <string name="export_error_msg">Your data could not be exported. Please try again</string>
+    <string name="import_error_msg">The selected file could not be exported.</string>
+    <string name="import_confirm_msg">Importing is irreversible and will replace ALL of your existing data.\nContinue?</string>
+    <string name="import_abort_msg">File import aborted!</string>
+    <string name="prompt_yes">YES</string>
+    <string name="prompt_no">NO</string>
 </resources>

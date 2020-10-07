@@ -7,4 +7,6 @@ interface FMTAndroidDelegate {
     fun FMTShowAlert(msg: String, level: FMTAlertLevel)
     fun FMTShowAlertBar(msg: String)
     fun FMTExportData(data: FMTFileData)
+    fun FMTImportData()
+    fun FMTShowPrompt(msg: String, level: FMTAlertLevel)
 }
