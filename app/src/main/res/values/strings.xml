@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Free Macro Tracker</string>
     <string name="alert_ok">OK</string>
+    <string name="alert_cancel">Cancel</string>
     <string name="alert_danger">Error</string>
     <string name="alert_warning">Warning</string>
     <string name="alert_success">Success</string>
+    <string name="export_write_perm_title">Permissions Required</string>
+    <string name="export_write_perm_msg">Please enable write permissions in order to export your data</string>
+    <string name="export_storage_fail_msg">Error exporting data. Device storage unavailable!</string>
+    <string name="export_perm_fail_msg">Error exporting data. Storage permissions denied!</string>
 </resources>

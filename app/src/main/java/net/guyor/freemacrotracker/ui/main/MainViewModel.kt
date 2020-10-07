@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import net.guyor.freemacrotracker.javascript.delegates.FMTAndroidDelegate
 import net.guyor.freemacrotracker.javascript.interfaces.FMTPlatformInterface
 import net.guyor.freemacrotracker.model.FMTAlertLevel
+import net.guyor.freemacrotracker.model.FMTFileData
 
 class MainViewModel : ViewModel(), FMTAndroidDelegate {
     private val _platformObject: FMTPlatformInterface = FMTPlatformInterface(this)
@@ -19,6 +20,9 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
 
     private val _fmtShowSnackBarEvent = MutableLiveData<String?>()
     val fmtShowSnackBarEvent: LiveData<String?> get() = _fmtShowSnackBarEvent
+
+    private val _fmtExportDataEvent = MutableLiveData<FMTFileData?>()
+    val fmtExportDataEvent: LiveData<FMTFileData?> get() = _fmtExportDataEvent
 
     override fun FMTShowAlert(msg: String, level: FMTAlertLevel) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
@@ -32,12 +36,22 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
         })
     }
 
+    override fun FMTExportData(data: FMTFileData) {
+        viewModelScope.launch(context = Dispatchers.Main, block = {
+            _fmtExportDataEvent.value = data;
+        })
+    }
+
     public fun onFmtShowAlertEventEnded() {
         _fmtShowAlertEvent.value = null
     }
 
     public fun onFmtShowSnackbarEventEnded() {
         _fmtShowSnackBarEvent.value = null
+    }
+
+    public fun onFmtExportEventEnded() {
+        _fmtExportDataEvent.value = null
     }
 }
 

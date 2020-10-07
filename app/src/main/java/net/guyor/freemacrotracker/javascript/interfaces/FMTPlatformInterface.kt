@@ -4,6 +4,7 @@ import android.util.Log
 import android.webkit.JavascriptInterface
 import net.guyor.freemacrotracker.javascript.delegates.FMTAndroidDelegate
 import net.guyor.freemacrotracker.model.FMTAlertLevel
+import net.guyor.freemacrotracker.model.FMTFileData
 
 private const val TAG = "FMTPlatformInterface"
 class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate) {
@@ -24,8 +25,17 @@ class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate)
     @JavascriptInterface
     public fun FMTShowAlertBar(msg: String?) {
         Log.v(TAG, "FMTShowAlertBar msg $msg")
-        if (msg != null) {
+        msg?.let {
             delegate.FMTShowAlertBar(msg)
+        }
+    }
+    @JavascriptInterface
+    public fun FMTExportData(data: String?, filename: String?) {
+        Log.v(TAG, "FMTExportData called")
+        data?.let {
+            filename?.let {
+                delegate.FMTExportData(FMTFileData(data, filename))
+            }
         }
     }
 }
