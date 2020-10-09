@@ -13,7 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.webkit.WebSettings.LOAD_NO_CACHE
+import android.webkit.WebSettings.*
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
@@ -35,7 +35,7 @@ private const val TAG = "MainFragment"
 private const val FMT_EXPORT_USER_DATA = 0xf5ee
 private const val FMT_IMPORT_USER_DATA = 0xf5ef
 private const val FMT_DATA_EXPORT_TYPE = "application/json"
-private const val FMT_URL = "https://free-macro-tracker--test-preview1-iwwp86yn.web.app"
+private const val FMT_URL = "https://app.freemacrotracker.com"
 
 // For local debugging
 //private const val FMT_URL = "http://10.0.2.2:3333"
@@ -62,9 +62,10 @@ class MainFragment : Fragment() {
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
         // For local development
-         webView.settings.cacheMode = LOAD_NO_CACHE
+//         webView.settings.cacheMode = LOAD_NO_CACHE
         // Production cache mode
 //        webView.settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
+        webView.settings.cacheMode = LOAD_DEFAULT
         // Set web view client
         webView.webViewClient = webViewClient
         webView.addJavascriptInterface(viewModel.platformObject, "FMTPlatformInterface")
@@ -185,7 +186,7 @@ class MainFragment : Fragment() {
     private suspend fun writeData(createDocumentResult: Intent?) {
         withContext(Dispatchers.IO) {
             createDocumentResult?.data?.let {
-                Log.d(TAG, "Opening Uri ${createDocumentResult.data} for writing")
+//                Log.d(TAG, "Opening Uri ${createDocumentResult.data} for writing")
                 activity?.contentResolver?.openOutputStream(it)?.use { outputStream ->
                     val writer = outputStream.bufferedWriter()
                     writer.write(viewModel.fmtExportDataEvent.value?.data)
@@ -198,7 +199,7 @@ class MainFragment : Fragment() {
         var rawData = ""
         withContext(Dispatchers.IO) {
             openDocumentResult?.data?.let {
-                Log.d(TAG, "Opening Uri ${openDocumentResult.data} for reading")
+//                Log.d(TAG, "Opening Uri ${openDocumentResult.data} for reading")
                 activity?.contentResolver?.openInputStream(it)?.use { stream ->
                     val reader = stream.bufferedReader()
                     rawData = reader.readText()

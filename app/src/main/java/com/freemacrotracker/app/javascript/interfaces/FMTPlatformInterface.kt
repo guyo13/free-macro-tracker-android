@@ -10,7 +10,7 @@ private const val TAG = "FMTPlatformInterface"
 class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate) {
     @JavascriptInterface
     fun FMTShowAlert(msg: String?, level: String?) {
-        Log.v(TAG, "FMTShowAlert msg $msg, level $level")
+//        Log.v(TAG, "FMTShowAlert msg $msg, level $level")
         if (msg != null && level != null) {
             val alertLevel: FMTAlertLevel = try {
                 FMTAlertLevel.valueOf(level)
@@ -24,26 +24,26 @@ class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate)
     }
     @JavascriptInterface
     fun FMTShowAlertBar(msg: String?) {
-        Log.v(TAG, "FMTShowAlertBar msg $msg")
+//        Log.v(TAG, "FMTShowAlertBar msg $msg")
         msg?.let {
             delegate.FMTShowAlertBar(msg)
         }
     }
     @JavascriptInterface
     fun FMTExportData(data: String?, filename: String?) {
-        Log.v(TAG, "FMTExportData called")
+//        Log.v(TAG, "FMTExportData called")
         data?.let {
             delegate.FMTExportData(FMTFileData(data, filename ?: ""))
         }
     }
     @JavascriptInterface
     fun FMTImportData() {
-        Log.v(TAG, "FMTImportData called")
+//        Log.v(TAG, "FMTImportData called")
         delegate.FMTImportData()
     }
     @JavascriptInterface
     fun FMTShowPrompt(msg: String?, level: String?) {
-        Log.v(TAG, "FMTShowPrompt msg $msg, level $level")
+//        Log.v(TAG, "FMTShowPrompt msg $msg, level $level")
         if (msg != null && level != null) {
             val alertLevel: FMTAlertLevel = try {
                 FMTAlertLevel.valueOf(level)
@@ -57,7 +57,7 @@ class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate)
     }
     @JavascriptInterface
     fun FMTFinishedLoading() {
-        Log.v(TAG, "on FMTFinishedLoading")
+//        Log.v(TAG, "on FMTFinishedLoading")
         delegate.FMTFinishedLoading()
     }
 }
