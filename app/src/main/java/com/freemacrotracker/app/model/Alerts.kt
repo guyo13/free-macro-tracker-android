@@ -1,4 +1,4 @@
-package net.guyor.freemacrotracker.model
+package com.freemacrotracker.app.model
 
 enum class FMTAlertLevel {
     danger, warning, primary, success, unspecified

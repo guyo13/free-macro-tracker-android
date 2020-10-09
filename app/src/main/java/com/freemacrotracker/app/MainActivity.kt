@@ -1,8 +1,8 @@
-package net.guyor.freemacrotracker
+package com.freemacrotracker.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import net.guyor.freemacrotracker.ui.main.MainFragment
+import com.freemacrotracker.app.main.ui.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

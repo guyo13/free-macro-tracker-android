@@ -1,4 +1,4 @@
-package net.guyor.freemacrotracker.ui.main
+package com.freemacrotracker.app.main.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK
 import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -27,10 +26,10 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.guyor.freemacrotracker.R
-import net.guyor.freemacrotracker.databinding.MainFragmentBinding
-import net.guyor.freemacrotracker.model.FMTAlertLevel
-import net.guyor.freemacrotracker.model.FMTFileData
+import com.freemacrotracker.app.R
+import com.freemacrotracker.app.databinding.MainFragmentBinding
+import com.freemacrotracker.app.model.FMTAlertLevel
+import com.freemacrotracker.app.model.FMTFileData
 
 private const val TAG = "MainFragment"
 private const val FMT_EXPORT_USER_DATA = 0xf5ee

@@ -1,4 +1,4 @@
-package net.guyor.freemacrotracker
+package com.freemacrotracker.app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("net.guyor.freemacrotracker", appContext.packageName)
+        assertEquals("com.freemacrotracker.app", appContext.packageName)
     }
 }

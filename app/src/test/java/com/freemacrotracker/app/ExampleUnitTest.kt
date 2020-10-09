@@ -1,4 +1,4 @@
-package net.guyor.freemacrotracker
+package com.freemacrotracker.app
 
 import org.junit.Test
 

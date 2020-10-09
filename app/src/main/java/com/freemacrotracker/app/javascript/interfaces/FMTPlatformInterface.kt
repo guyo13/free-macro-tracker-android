@@ -1,10 +1,10 @@
-package net.guyor.freemacrotracker.javascript.interfaces
+package com.freemacrotracker.app.javascript.interfaces
 
 import android.util.Log
 import android.webkit.JavascriptInterface
-import net.guyor.freemacrotracker.javascript.delegates.FMTAndroidDelegate
-import net.guyor.freemacrotracker.model.FMTAlertLevel
-import net.guyor.freemacrotracker.model.FMTFileData
+import com.freemacrotracker.app.javascript.delegates.FMTAndroidDelegate
+import com.freemacrotracker.app.model.FMTAlertLevel
+import com.freemacrotracker.app.model.FMTFileData
 
 private const val TAG = "FMTPlatformInterface"
 class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate) {

@@ -1,7 +1,7 @@
-package net.guyor.freemacrotracker.javascript.delegates
+package com.freemacrotracker.app.javascript.delegates
 
-import net.guyor.freemacrotracker.model.FMTAlertLevel
-import net.guyor.freemacrotracker.model.FMTFileData
+import com.freemacrotracker.app.model.FMTAlertLevel
+import com.freemacrotracker.app.model.FMTFileData
 
 interface FMTAndroidDelegate {
     fun FMTShowAlert(msg: String, level: FMTAlertLevel)

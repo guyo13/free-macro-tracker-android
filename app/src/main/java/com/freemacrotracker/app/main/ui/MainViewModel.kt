@@ -1,4 +1,4 @@
-package net.guyor.freemacrotracker.ui.main
+package com.freemacrotracker.app.main.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.guyor.freemacrotracker.javascript.delegates.FMTAndroidDelegate
-import net.guyor.freemacrotracker.javascript.interfaces.FMTPlatformInterface
-import net.guyor.freemacrotracker.model.FMTAlertLevel
-import net.guyor.freemacrotracker.model.FMTFileData
+import com.freemacrotracker.app.javascript.delegates.FMTAndroidDelegate
+import com.freemacrotracker.app.javascript.interfaces.FMTPlatformInterface
+import com.freemacrotracker.app.model.FMTAlertLevel
+import com.freemacrotracker.app.model.FMTFileData
 
 class MainViewModel : ViewModel(), FMTAndroidDelegate {
     private val _platformObject: FMTPlatformInterface = FMTPlatformInterface(this)
