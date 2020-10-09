@@ -55,4 +55,9 @@ class FMTPlatformInterface constructor(private val delegate: FMTAndroidDelegate)
             delegate.FMTShowPrompt(msg, alertLevel);
         }
     }
+    @JavascriptInterface
+    fun FMTFinishedLoading() {
+        Log.v(TAG, "on FMTFinishedLoading")
+        delegate.FMTFinishedLoading()
+    }
 }

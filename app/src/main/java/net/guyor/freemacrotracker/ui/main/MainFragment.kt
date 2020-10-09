@@ -2,7 +2,6 @@ package net.guyor.freemacrotracker.ui.main
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -12,7 +11,9 @@ import android.provider.DocumentsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK
 import android.webkit.WebSettings.LOAD_NO_CACHE
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -35,11 +36,15 @@ private const val TAG = "MainFragment"
 private const val FMT_EXPORT_USER_DATA = 0xf5ee
 private const val FMT_IMPORT_USER_DATA = 0xf5ef
 private const val FMT_DATA_EXPORT_TYPE = "application/json"
+private const val FMT_URL = "https://free-macro-tracker--test-preview1-iwwp86yn.web.app"
+
+// For local debugging
+//private const val FMT_URL = "http://10.0.2.2:3333"
 
 class MainFragment : Fragment() {
 
     private lateinit var webView: WebView
-    private val webViewClient = WebViewClient()
+    private val webViewClient =  WebViewClient()
     private lateinit var binding: MainFragmentBinding
     companion object {
         fun newInstance() = MainFragment()
@@ -57,12 +62,14 @@ class MainFragment : Fragment() {
         webView = binding.webview
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
-        // remove in production
-        webView.settings.cacheMode = LOAD_NO_CACHE
+        // For local development
+         webView.settings.cacheMode = LOAD_NO_CACHE
+        // Production cache mode
+//        webView.settings.cacheMode = LOAD_CACHE_ELSE_NETWORK
+        // Set web view client
         webView.webViewClient = webViewClient
-        // Change to public url in production
         webView.addJavascriptInterface(viewModel.platformObject, "FMTPlatformInterface")
-        webView.loadUrl("http://10.0.2.2:3333")
+        webView.loadUrl(FMT_URL)
 
         // When JS code calling show alert
         viewModel.fmtShowAlertEvent.observe(viewLifecycleOwner) {
@@ -80,6 +87,18 @@ class MainFragment : Fragment() {
                     dialog.show()
                 }
                 viewModel.onFmtShowAlertEventEnded()
+            }
+        }
+
+        // When JS indicating that the app finished loading
+        viewModel.fmtFinishedLoadingEvent.observe(viewLifecycleOwner) {
+            if (it == true) {
+                lifecycleScope.launch(Dispatchers.Main) {
+//                    Log.d(TAG, "fmtFinishedLoadingEvent")
+                    binding.webview.visibility = VISIBLE
+                    activity?.setTheme(R.style.AppTheme)
+                    viewModel.onFmtFinishedLoadingEventEnded()
+                }
             }
         }
 

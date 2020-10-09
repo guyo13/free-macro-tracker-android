@@ -9,4 +9,5 @@ interface FMTAndroidDelegate {
     fun FMTExportData(data: FMTFileData)
     fun FMTImportData()
     fun FMTShowPrompt(msg: String, level: FMTAlertLevel)
+    fun FMTFinishedLoading()
 }

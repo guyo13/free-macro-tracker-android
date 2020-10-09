@@ -30,6 +30,9 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
     private val _fmtShowPromptEvent = MutableLiveData<FMTAlertEvent?>()
     val fmtShowPromptEvent: LiveData<FMTAlertEvent?> get() = _fmtShowPromptEvent
 
+    private val _fmtFinishedLoadingEvent = MutableLiveData<Boolean?>()
+    val fmtFinishedLoadingEvent: LiveData<Boolean?> get() = _fmtFinishedLoadingEvent
+
     override fun FMTShowAlert(msg: String, level: FMTAlertLevel) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
             _fmtShowAlertEvent.value = FMTAlertEvent(msg, level)
@@ -60,6 +63,12 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
         })
     }
 
+    override fun FMTFinishedLoading() {
+        viewModelScope.launch(context = Dispatchers.Main, block = {
+            _fmtFinishedLoadingEvent.value = true
+        })
+    }
+
     fun onFmtShowAlertEventEnded() {
         _fmtShowAlertEvent.value = null
     }
@@ -78,6 +87,10 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
 
     fun onFmtShowPromptEventEnded() {
         _fmtShowPromptEvent.value = null
+    }
+
+    fun onFmtFinishedLoadingEventEnded() {
+        _fmtFinishedLoadingEvent.value = null
     }
 }
 

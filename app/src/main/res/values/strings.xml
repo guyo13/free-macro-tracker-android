@@ -13,7 +13,7 @@
     <string name="export_success_msg">Your data was successfully exported!</string>
     <string name="export_error_msg">Your data could not be exported. Please try again</string>
     <string name="import_error_msg">The selected file could not be exported.</string>
-    <string name="import_confirm_msg">Importing is irreversible and will replace ALL of your existing data.\nContinue?</string>
+    <string name="import_confirm_msg">Importing is irreversible and might replace ALL of your existing data.\nContinue?</string>
     <string name="import_abort_msg">File import aborted!</string>
     <string name="prompt_yes">YES</string>
     <string name="prompt_no">NO</string>
