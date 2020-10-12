@@ -105,7 +105,8 @@ class MainFragment : Fragment() {
         // When JS code is asking to show a Snackbar
         viewModel.fmtShowSnackBarEvent.observe(viewLifecycleOwner, {
             if (it != null) {
-                val snackbar = Snackbar.make(binding.webview, it, LENGTH_SHORT)
+                val snackbar = Snackbar.make(binding.bottomNavigation, it, LENGTH_SHORT)
+                snackbar.anchorView = binding.bottomNavigation
                 snackbar.show()
                 viewModel.onFmtShowSnackbarEventEnded()
             }
@@ -128,10 +129,10 @@ class MainFragment : Fragment() {
                     val dialog = MaterialAlertDialogBuilder(ctx)
                         .setMessage(it.msg)
                         .setPositiveButton(R.string.prompt_yes) { dialog, which ->
-                            webView.evaluateJavascript("fmtAppInstance.userPromptPlatformCallback(true);", null)
+                            webView.evaluateJavascript("platformInterface.userPromptPlatformCallback(true);", null)
                         }
                         .setNegativeButton(R.string.prompt_no) { dialog, which ->
-                            webView.evaluateJavascript("fmtAppInstance.userPromptPlatformCallback(false);", null)
+                            webView.evaluateJavascript("platformInterface.userPromptPlatformCallback(false);", null)
                         }
                     when (it.level) {
                         FMTAlertLevel.warning -> dialog.setTitle(R.string.alert_warning)
@@ -150,7 +151,9 @@ class MainFragment : Fragment() {
             val state = Environment.getExternalStorageState()
             if (Environment.MEDIA_MOUNTED != state) {
                 withContext(Dispatchers.Main) {
-                    Snackbar.make(binding.webview, R.string.export_storage_fail_msg, LENGTH_LONG).show()
+                    val snackbar = Snackbar.make(binding.bottomNavigation, R.string.export_storage_fail_msg, LENGTH_LONG)
+                    snackbar.anchorView = binding.bottomNavigation
+                    snackbar.show()
                 }
                 return@launch
             }
@@ -163,7 +166,7 @@ class MainFragment : Fragment() {
     private fun openFile(requestCode: Int, mimeType: String, pickerInitialUri: Uri?) {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = mimeType
+            type = "*/*"
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && pickerInitialUri != null) {
                 putExtra(DocumentsContract.EXTRA_INITIAL_URI, pickerInitialUri)
             }
