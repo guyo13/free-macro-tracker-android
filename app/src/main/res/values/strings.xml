@@ -17,4 +17,5 @@
     <string name="import_abort_msg">File import aborted!</string>
     <string name="prompt_yes">YES</string>
     <string name="prompt_no">NO</string>
+    <string name="pb_content_desc">Loading Indicator</string>
 </resources>

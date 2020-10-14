@@ -3,6 +3,7 @@ package com.freemacrotracker.app.main.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,11 +12,14 @@ import android.provider.DocumentsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.webkit.WebSettings.*
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -58,6 +62,8 @@ class MainFragment : Fragment() {
     ): View {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding = MainFragmentBinding.inflate(inflater, container, false)
+        binding.progressBar.indeterminateDrawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            0xffffff, BlendModeCompat.SRC_ATOP)
         webView = binding.webview
         webView.settings.javaScriptEnabled = true
         webView.settings.domStorageEnabled = true
@@ -95,8 +101,9 @@ class MainFragment : Fragment() {
             if (it == true) {
                 lifecycleScope.launch(Dispatchers.Main) {
 //                    Log.d(TAG, "fmtFinishedLoadingEvent")
+                    binding.progressBar.visibility = GONE
                     binding.webview.visibility = VISIBLE
-                    activity?.setTheme(R.style.AppTheme)
+                    binding.main.setBackgroundColor(Color.WHITE)
                     viewModel.onFmtFinishedLoadingEventEnded()
                 }
             }
