@@ -1,3 +1,7 @@
+<!-- Copyright (c) 2020, Guy Or Please see the AUTHORS file for details.
+ All rights reserved. Use of this source code is governed by a GNU GPL
+ license that can be found in the LICENSE file. -->
+
 <vector android:height="200dp" android:viewportHeight="100"
     android:viewportWidth="100" android:width="200dp" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillAlpha="0.566265" android:fillColor="#000000"
