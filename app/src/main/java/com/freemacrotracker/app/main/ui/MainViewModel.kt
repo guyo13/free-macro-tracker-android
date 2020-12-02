@@ -37,6 +37,9 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
     private val _fmtFinishedLoadingEvent = MutableLiveData<Boolean?>()
     val fmtFinishedLoadingEvent: LiveData<Boolean?> get() = _fmtFinishedLoadingEvent
 
+    private var _fmtAppLoaded = false
+    val fmtAppLoaded get() = _fmtAppLoaded
+
     override fun FMTShowAlert(msg: String, level: FMTAlertLevel) {
         viewModelScope.launch(context = Dispatchers.Main, block = {
             _fmtShowAlertEvent.value = FMTAlertEvent(msg, level)
@@ -95,6 +98,7 @@ class MainViewModel : ViewModel(), FMTAndroidDelegate {
 
     fun onFmtFinishedLoadingEventEnded() {
         _fmtFinishedLoadingEvent.value = null
+        _fmtAppLoaded = true
     }
 }
 

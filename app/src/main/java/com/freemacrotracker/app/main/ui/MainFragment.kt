@@ -19,6 +19,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.webkit.ValueCallback
 import android.webkit.WebSettings.*
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -38,12 +39,16 @@ import com.freemacrotracker.app.R
 import com.freemacrotracker.app.databinding.MainFragmentBinding
 import com.freemacrotracker.app.model.FMTAlertLevel
 import com.freemacrotracker.app.model.FMTFileData
+import java.text.SimpleDateFormat
+import java.util.*
 
 private const val TAG = "MainFragment"
 private const val FMT_EXPORT_USER_DATA = 0xf5ee
 private const val FMT_IMPORT_USER_DATA = 0xf5ef
 private const val FMT_DATA_EXPORT_TYPE = "application/json"
 private const val FMT_URL = "https://app.freemacrotracker.com"
+private const val FMT_TAB_OVERVIEW = "overview"
+private const val FMT_DATE_FORMAT = "yyyy-MM-dd"
 
 // For local debugging
 //private const val FMT_URL = "http://10.0.2.2:3333"
@@ -58,6 +63,13 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
+    @SuppressLint("SimpleDateFormat")
+    private val dateFormat = SimpleDateFormat(FMT_DATE_FORMAT)
+
+    override fun onResume() {
+        super.onResume()
+        updateToday()
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
@@ -275,5 +287,50 @@ class MainFragment : Fragment() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun updateToday() {
+        if (viewModel.fmtAppLoaded) {
+            // Check if App state today value is same date as now
+            // If not then update it
+            webView.evaluateJavascript("( () => {" +
+                    "const today = fmtAppInstance.today;" +
+                    "return `\${today.getFullYear()}-\${today.getMonth() + 1 }-\${today.getDate()}`;" +
+                    "} )();") { dateString ->
+                lifecycleScope.launch {
+                    var shouldUpdate = false
+                    withContext(Dispatchers.Default) {
+                        if (dateString == null) {
+                            Log.w(TAG, "Got null date string")
+                            return@withContext
+                        }
+                        val trimmedDateString = dateString.trim('"')
+                        val appStateToday: Date?
+                        try {
+                            appStateToday = dateFormat.parse(trimmedDateString)
+                            shouldUpdate = if (appStateToday != null) {
+                                val now = Date()
+                                val nowString = dateFormat.format(now)
+                                val appStateTodayString =  dateFormat.format(appStateToday)
+                                Log.d(TAG, "Comparing $nowString with $appStateTodayString")
+                                nowString != appStateTodayString
+                            } else {
+                                true
+                            }
+                        } catch (t: Throwable) {
+                            Log.e(TAG, "Couldn't parse date string '${trimmedDateString}'. Error: ${t.stackTrace}")
+                            shouldUpdate = true
+                        }
+                    }
+                    if (shouldUpdate) {
+                        // Update Today
+                        Log.d(TAG, "Updating Today")
+                        webView.evaluateJavascript("( () => { FMTOverviewLoadCurrentDay(); } )();") {
+                            Log.d(TAG, "Updated today successfully!")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
